@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template('index.html',l=[{"name":"hoge","value":"1"},{"name":"fuga","value":"2"},{"name":"foo","value":"3"}])
+    return render_template('index.html',title="hoge",message="fuga")
 
 @app.route("/login",methods=["GET"])
 def render_form():
