@@ -6,7 +6,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template('index.html',title="hoge",message="fuga")
+    return render_template('index.html')
+
+@app.route("/answer")
+def render_answer():
+    return render_template('answer.html')
 
 @app.route("/login",methods=["GET"])
 def render_form():
