@@ -1,13 +1,15 @@
-from flask import Flask,render_template,request
 import psycopg2,psycopg2.extras
-from werkzeug.utils import secure_filename
+from flask import Flask,render_template,request
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/flasknote'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+migrate = Migrate(app,db)
+
 
 class User(db.Model): #PythonのクラスからPostgresSQLを操作するモデルを作成する
     __tablename__="appdb01"
