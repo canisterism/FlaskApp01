@@ -1,78 +1,29 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>アンサ：トップページ</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg"> 
-        <a class="navbar-brand" href="/">アンサ.com</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">ホーム<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="/about">アンサについて</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="/question">質問</a>
-                </li>
-            </ul>                
-            <span class="navbar-text">
-                <a href="/login" class="btn btn-primary">ログイン</a>
-            </span>
-        </div>
-    </nav>    
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-12 col-sm-8 col-md-8 col-lg-8">
-                <h1>なまえ</h1>
-                <p>To be, or not to be: that is the question:Whether 'tis nobler in the mind to suffer. The slings and arrows of outrageous fortune,Or to take arms against a sea of troubles,And by opposing end them? To die: to sleep;No more; and by a sleep to say we end.The heart-ache and the thousand natural shocks.That flesh is heir to, 'tis a consummation.Devoutly to be wish'd. To die, to sleep;</p>
-            </div>
-            <div class="col-12 col-sm-4 col-md-4 col-lg-4">
-                <img src="/static/a.jpg" class="img-thumnail" width="200" height="200" alt="sample image"/>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-2 col-sm-1 col-md-1 col-lg-1">
-                <img class="img-thumnail" style="min-width:width36px;max-width:50px;" src="/static/b.jpg">        
-            </div>
-            <div class="col-10 col-sm-11 col-md-11 col-lg-11">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <p class="card-text">質問や回答を入れるための箱です。</p>
-                        <a href="/reply/1" class="btn btn-primary">返信する</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-1 col-sm-1 col-md-1 col-lg-1">
-                <i class="fa fa-reply fa-rotate-90"></i>
-            </div>
-            <div class="col-2 col-sm-1 col-md-1 col-lg-1">
-                <img class="img-thumnail" style="min-width:width36px;max-width:64px;" src="/static/c.jpg">
-            </div>
-            <div class="col-9 col-sm-10 col-md-10 col-lg-10">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <p class="card-text">質問や回答を入れるための箱です。</p>
-                    </div>
-                </div>
-            </div>        
-        </div>
-    </div>
+    <table>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{user.username}}</td>
+            <td>{{user.description}}</td>
+            <td>
+                <img src="{{user.user_image_url}}" width="120"/>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 </html>

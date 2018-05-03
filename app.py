@@ -1,39 +1,50 @@
 from flask import Flask,render_template,request
+import psycopg2,psycopg2.extras
 from werkzeug.utils import secure_filename
-from random import random
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-@app.route("/")
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/flasknote'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class User(db.Model): #PythonのクラスからPostgresSQLを操作するモデルを作成する
+    __tablename__="appdb01"
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    username = db.Column(db.String(64), index=True,unique=True)
+    description = db.Column(db.String(120), index=True,unique=True)
+    user_image_url = db.Column(db.String(120), index=True,unique=True)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+@app.route('/')
 def index():
-    return render_template('index.html')
+    users = User.query.all()
+    return render_template("index.html", users=users)
 
-@app.route("/answer")
-def render_answer():
-    return render_template('answer.html')
+@app.route('/form')
+def form():
+    return render_template("form.html")
 
-@app.route("/login",methods=["GET"])
-def render_form():
-    return render_template("login.html")
-
-@app.route("/login",methods=["POST"])
-def login():
-    if request.form["username"] and request.form["email"]:
-        return render_template("check.html", email=request.form["email"]
-                                , username=request.form["username"])
-    else:
-        return render_template("error.html")
-
-@app.route("/upload", methods=["GET"])
-def render_upload_form():
-    return render_template("upload.html")
-
-@app.route("/upload", methods=["POST"])
-def upload_file():
-    if request.form["name"] and request.files["image"]:
+@app.route("/register",methods=["POST"]) #フォームから新しいデータをdbに登録する
+def register():
+    if request.form["username"] and request.form["description"] and request.files["image"]:
         f = request.files["image"]
         filepath = "static/" + secure_filename(f.filename)
         f.save(filepath)
 
-        return render_template("result.html", name=request.form["name"]
-                                ,image_url=filepath)
+        filepath = "/" + filepath
+        newUser = User(username=request.form["username"], #新しいレコードのインスタンス
+                    description=request.form["description"],
+                    user_image_url=filepath)
+        db.session.add(newUser)
+        db.session.commit()
+        return render_template('result.html',username=request.form["username"],description=request.form["description"])
+    else:
+        return render_template("error.html")
+
+@app.cli.command("initdb")
+def initdb_command():
+    db.create_all()
