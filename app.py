@@ -10,17 +10,12 @@ from flask import Flask,render_template,request,make_response,session
 #from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.secret_key = 'wj9jr2jg@249j0J4h20JaV91A03f4j2'
 
 @app.route('/')
 def index():
-    try:
-        count = request.cookies.get('count')
-        if count != None:
-            count = int(count) + 1
-        else:
-            count = 0
-        resp = make_response(render_template('index.html',count=count))
-        resp.set_cookie('count',str(count))
-        return resp
-    except Exception as e:
-        return render_template('error.html'),500
+    if 'logged_in' in session and session['logged_in'] == True:
+        return 'You are logged in.'
+    else:
+        session['logged_in'] = True
+        return 'You are  not logged in.'
